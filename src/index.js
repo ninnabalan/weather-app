@@ -5,12 +5,14 @@ function displayTemperature(response) {
     let descriptionElement = document.querySelector("#description");
     let humidityElement = document.querySelector("#humidity");
     let windSpeedElement = document.querySelector("#wind-speed");
+    let iconElement = document.querySelector("#icon");
+    iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class = "weather-app-icon"/>`;
     document.querySelector(
         ".current-temperature-value"
     ).innerText = `${temperature}`;
     descriptionElement.innerHTML = response.data.condition.description;
     humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
-    windSpeedElement.innerHTML = `${response.data.temperature.humidity}km/h`;
+    windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
     console.log(response.data.condition.description);
 }
 
