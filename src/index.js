@@ -2,12 +2,19 @@
 function displayTemperature(response) {
     let temperatureElement = document.querySelector("#temperature");
     let temperature = Math.round(response.data.temperature.current);
+    let descriptionElement = document.querySelector("#description");
+    let humidityElement = document.querySelector("#humidity");
+    let windSpeedElement = document.querySelector("#wind-speed");
     document.querySelector(
         ".current-temperature-value"
     ).innerText = `${temperature}`;
+    descriptionElement.innerHTML = response.data.condition.description;
+    humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
+    windSpeedElement.innerHTML = `${response.data.temperature.humidity}km/h`;
+    console.log(response.data.condition.description);
 }
 
-// search for weather by city
+// weather by city
 function search(city) {
     let cityElement = document.querySelector("#city");
     cityElement.innerHTML = capitalizeFirstLetter(city);
