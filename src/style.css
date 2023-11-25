@@ -74,11 +74,10 @@ main {
     color: #f65282;
 }
 
-.current-temperature-icon {
+.icon {
 
-    width: 10px;
-
-
+    width: 40px;
+    height: 40px;
 }
 
 .current-temperature-value {
@@ -91,7 +90,7 @@ main {
     font-size: 28px;
     top: 10px;
     position: relative;
-    margin-left: 5px;
+
 }
 
 footer {
