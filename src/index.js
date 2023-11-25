@@ -1,3 +1,4 @@
+//  display temperature
 function displayTemperature(response) {
     let temperatureElement = document.querySelector("#temperature");
     let temperature = Math.round(response.data.temperature.current);
@@ -6,24 +7,23 @@ function displayTemperature(response) {
     ).innerText = `${temperature}`;
 }
 
-
-function search(event) {
-    event.preventDefault();
-    let searchInputElement = document.querySelector("#search-input");
+// search for weather by city
+function search(city) {
     let cityElement = document.querySelector("#city");
-    cityElement.innerHTML = capitalizeFirstLetter(searchInputElement.value);
+    cityElement.innerHTML = capitalizeFirstLetter(city);
 
-    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${searchInputElement.value}&key=0cb5bbfeo59e4297fc00a8560ft0af03&units=metric`;
+    let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=0cb5bbfeo59e4297fc00a8560ft0af03&units=metric`;
 
     axios.get(apiUrl).then(function (response) {
         displayTemperature(response);
     });
 }
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-
+//  date
 function formatDate(date) {
     let minutes = date.getMinutes();
     let hours = date.getHours();
@@ -51,12 +51,16 @@ function formatDate(date) {
     return `${formattedDay} ${hours}:${minutes}`;
 }
 
-let searchForm = document.querySelector("#search-form");
-searchForm.addEventListener("submit", search);
-
-let currentDateELement = document.querySelector("#current-date");
+let currentDateElement = document.querySelector("#current-date");
 let currentDate = new Date();
+currentDateElement.innerHTML = formatDate(currentDate);
 
-currentDateELement.innerHTML = formatDate(currentDate);
+let searchForm = document.querySelector("#search-form");
+searchForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    let searchInputElement = document.querySelector("#search-input");
+    search(searchInputElement.value);
+});
 
-
+let defaultCity = "Vienna";
+search(defaultCity);
