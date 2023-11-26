@@ -14,6 +14,8 @@ function displayTemperature(response) {
     humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
     windSpeedElement.innerHTML = `${response.data.wind.speed}km/h`;
     console.log(response.data.condition.description);
+    getForecast(response.data.city
+    );
 }
 
 // weather by city
@@ -71,5 +73,57 @@ searchForm.addEventListener("submit", function (event) {
     search(searchInputElement.value);
 });
 
+function formatDate(timestap) {
+    let date = new Date(timestap * 1000);
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    return days[date.getDay()];
+
+}
+
+function getForecast(city) {
+    let apiKey = "0cb5bbfeo59e4297fc00a8560ft0af03";
+    let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+    axios(apiUrl).then(displayForecast);
+}
+
+function displayForecast(response) {
+    console.log(response.data);
+    let forecastElement = document.querySelector("#forecast");
+    let forecastHtml = "";
+
+
+    response.data.daily.forEach(function (day, index) {
+        if (index < 5) {
+            forecastHtml = forecastHtml + `
+            <div class="row">
+                <div class="col-2">
+                    <div class="weather-forecast-date">${formatDate(day.time)}</div>
+                    <div> 
+                        <img src="${day.condition.icon_url}" class="weather-forecast-icon"/>
+                    </div>
+                    <div class="weather-forecast-temperatures">
+                        <span class="weather-forecast-temperature-max">${Math.round(day.temperature.maximum)}°</span>
+                        <span class="weather-forecast-temperature-min">${Math.round(day.temperature.minimum)}°</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        }
+    });
+
+    forecastElement.innerHTML = forecastHtml;
+
+
+
+}
+
+
+
+
+
+
+
+
 let defaultCity = "Vienna";
 search(defaultCity);
+
