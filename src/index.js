@@ -73,7 +73,7 @@ searchForm.addEventListener("submit", function (event) {
     search(searchInputElement.value);
 });
 
-function formatDate(timestap) {
+function formatDay(timestap) {
     let date = new Date(timestap * 1000);
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     return days[date.getDay()];
@@ -97,7 +97,7 @@ function displayForecast(response) {
             forecastHtml = forecastHtml + `
             <div class="row">
                 <div class="col-2">
-                    <div class="weather-forecast-date">${formatDate(day.time)}</div>
+                    <div class="weather-forecast-date">${formatDay(day.time)}</div>
                     <div> 
                         <img src="${day.condition.icon_url}" class="weather-forecast-icon"/>
                     </div>
